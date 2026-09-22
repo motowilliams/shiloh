@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Elite Thrower Protocol</title>
 
     <!-- Google Fonts for Modern Typography -->
@@ -376,18 +376,25 @@
             <h2>🏋️ Training Split</h2>
 
             <!-- Mobile Tabs -->
-            <div class="tabs">
-                <button class="tab-btn active" onclick="openTab('mon', this)">Mon</button>
-                <button class="tab-btn" onclick="openTab('tue', this)">Tue</button>
-                <button class="tab-btn" onclick="openTab('wed', this)">Wed</button>
-                <button class="tab-btn" onclick="openTab('thu', this)">Thu</button>
-                <button class="tab-btn" onclick="openTab('fri', this)">Fri</button>
-                <button class="tab-btn" onclick="openTab('sat', this)">Sat</button>
-                <button class="tab-btn" onclick="openTab('sun', this)">Sun</button>
+            <div class="tabs" role="tablist" aria-label="Weekly training split">
+                <button id="tab-mon" class="tab-btn active" role="tab" aria-selected="true" aria-controls="mon"
+                    onclick="openTab('mon', this)">Mon</button>
+                <button id="tab-tue" class="tab-btn" role="tab" aria-selected="false" aria-controls="tue"
+                    tabindex="-1" onclick="openTab('tue', this)">Tue</button>
+                <button id="tab-wed" class="tab-btn" role="tab" aria-selected="false" aria-controls="wed"
+                    tabindex="-1" onclick="openTab('wed', this)">Wed</button>
+                <button id="tab-thu" class="tab-btn" role="tab" aria-selected="false" aria-controls="thu"
+                    tabindex="-1" onclick="openTab('thu', this)">Thu</button>
+                <button id="tab-fri" class="tab-btn" role="tab" aria-selected="false" aria-controls="fri"
+                    tabindex="-1" onclick="openTab('fri', this)">Fri</button>
+                <button id="tab-sat" class="tab-btn" role="tab" aria-selected="false" aria-controls="sat"
+                    tabindex="-1" onclick="openTab('sat', this)">Sat</button>
+                <button id="tab-sun" class="tab-btn" role="tab" aria-selected="false" aria-controls="sun"
+                    tabindex="-1" onclick="openTab('sun', this)">Sun</button>
             </div>
 
             <!-- Tab Content: Monday -->
-            <div id="mon" class="tab-content active">
+            <div id="mon" class="tab-content active" role="tabpanel" aria-labelledby="tab-mon">
                 <div class="exercise-group">
                     <h4>🎯 Throws</h4>
                     <ul>
@@ -410,7 +417,7 @@
             </div>
 
             <!-- Tab Content: Tuesday -->
-            <div id="tue" class="tab-content">
+            <div id="tue" class="tab-content" role="tabpanel" aria-labelledby="tab-tue" hidden>
                 <div class="exercise-group">
                     <h4>🌪️ Med Ball Power</h4>
                     <ul>
@@ -434,7 +441,7 @@
             </div>
 
             <!-- Tab Content: Wednesday -->
-            <div id="wed" class="tab-content">
+            <div id="wed" class="tab-content" role="tabpanel" aria-labelledby="tab-wed" hidden>
                 <div class="exercise-group">
                     <h4>🧘‍♀️ Active Recovery</h4>
                     <p style="color: rgba(255,255,255,0.85); font-size: 0.95rem;">
@@ -445,7 +452,7 @@
             </div>
 
             <!-- Tab Content: Thursday -->
-            <div id="thu" class="tab-content">
+            <div id="thu" class="tab-content" role="tabpanel" aria-labelledby="tab-thu" hidden>
                 <div class="exercise-group">
                     <h4>🎯 Throws</h4>
                     <ul>
@@ -466,7 +473,7 @@
             </div>
 
             <!-- Tab Content: Friday -->
-            <div id="fri" class="tab-content">
+            <div id="fri" class="tab-content" role="tabpanel" aria-labelledby="tab-fri" hidden>
                 <div class="exercise-group">
                     <h4>💪 Upper Armor</h4>
                     <ul>
@@ -483,7 +490,7 @@
             </div>
 
             <!-- Tab Content: Saturday -->
-            <div id="sat" class="tab-content">
+            <div id="sat" class="tab-content" role="tabpanel" aria-labelledby="tab-sat" hidden>
                 <div class="exercise-group">
                     <h4>🎯 Technique & Speed</h4>
                     <ul>
@@ -495,7 +502,7 @@
             </div>
 
             <!-- Tab Content: Sunday -->
-            <div id="sun" class="tab-content">
+            <div id="sun" class="tab-content" role="tabpanel" aria-labelledby="tab-sun" hidden>
                 <div class="exercise-group">
                     <h4>💤 Complete Rest</h4>
                     <p style="color: rgba(255,255,255,0.85); font-size: 0.95rem;">
@@ -532,18 +539,25 @@
             // Hide all tab content
             document.querySelectorAll('.tab-content').forEach(el => {
                 el.classList.remove('active');
+                el.hidden = true;
             });
 
             // Remove active class from all buttons
             document.querySelectorAll('.tab-btn').forEach(el => {
                 el.classList.remove('active');
+                el.setAttribute('aria-selected', 'false');
+                el.setAttribute('tabindex', '-1');
             });
 
             // Show selected tab content
-            document.getElementById(day).classList.add('active');
+            const panel = document.getElementById(day);
+            panel.classList.add('active');
+            panel.hidden = false;
 
             // Highlight selected button
             btn.classList.add('active');
+            btn.setAttribute('aria-selected', 'true');
+            btn.setAttribute('tabindex', '0');
 
             // Optional: slight haptic feedback if supported by mobile browser
             if (window.navigator && window.navigator.vibrate) {

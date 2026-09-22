@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Elite Thrower Protocol</title>
+    <title>Thrower Protocol</title>
 
     <!-- Google Fonts for Modern Typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -33,6 +33,10 @@
             margin: 0;
             padding: 0;
             -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
@@ -286,20 +290,41 @@
             border-radius: 12px;
             padding: 1rem;
         }
+
+        /* TOC Nav Links */
+        .toc-nav {
+            padding-bottom: 0.5rem;
+        }
+
+        a.tab-btn {
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        a.tab-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+            border-color: rgba(255, 255, 255, 0.2);
+        }
     </style>
 </head>
 
 <body>
 
-    <header>
-        <h1>Elite Protocol</h1>
-        <p class="subtitle">Strength & Structural Mass Program</p>
-    </header>
-
     <div class="container">
 
+        <!-- Table of Contents -->
+        <nav class="tabs toc-nav">
+            <a href="#nutrition-strategy" class="tab-btn">Nutrition</a>
+            <a href="#training-split" class="tab-btn">Training</a>
+            <a href="#progression-cycles" class="tab-btn">Progression</a>
+            <a href="#thick-tank" class="tab-btn">Smoothie</a>
+        </nav>
+
         <!-- Nutrition Strategy -->
-        <section class="card">
+        <section id="nutrition-strategy" class="card">
             <h2>🍽️ Nutrition Strategy</h2>
 
             <div class="highlight-box">
@@ -351,28 +376,8 @@
             </ul>
         </section>
 
-        <!-- Smoothie Section -->
-        <section class="card">
-            <h2>🥤 The "Thick Tank" Smoothie</h2>
-            <p style="font-size: 0.95rem; color: var(--text-muted); margin-bottom: 1rem;">
-                Liquids bypass stretch receptors. Drink this once a day to guarantee your surplus.
-            </p>
-
-            <div class="smoothie-recipe">
-                <ul>
-                    <li><strong>12-16 oz</strong> Whole Milk (or Oat Milk)</li>
-                    <li><strong>1 large</strong> ripe banana</li>
-                    <li><strong>1/4 cup</strong> heavy cream or coconut cream <em>(Massive calorie boost)</em></li>
-                    <li><strong>3 heaping tbsp</strong> peanut or almond butter</li>
-                    <li><strong>1 scoop</strong> whey protein (chocolate or vanilla)</li>
-                    <li><strong>1 tbsp</strong> olive oil <em>(You won't taste it)</em></li>
-                    <li><strong>1 big squeeze</strong> of honey</li>
-                </ul>
-            </div>
-        </section>
-
         <!-- Training Schedule -->
-        <section class="card">
+        <section id="training-split" class="card">
             <h2>🏋️ Training Split</h2>
 
             <!-- Mobile Tabs -->
@@ -507,7 +512,7 @@
         </section>
 
         <!-- Progression & Cycles -->
-        <section class="card">
+        <section id="progression-cycles" class="card">
             <h2>📈 Progression & Cycles</h2>
             <div class="highlight-box">
                 <strong>Golden Rule:</strong> If technique breaks down, don't increase the weight. Increase loads
@@ -523,6 +528,26 @@
                 <li><strong>Week 4 (Deload):</strong> Reduce lifting volume by 30-40%. Keep explosive work, reduce
                     fatigue. Restart cycle.</li>
             </ul>
+        </section>
+
+        <!-- Smoothie Section -->
+        <section id="thick-tank" class="card">
+            <h2>🥤 The "Thick Tank" Smoothie</h2>
+            <p style="font-size: 0.95rem; color: var(--text-muted); margin-bottom: 1rem;">
+                Liquids bypass stretch receptors. Drink this once a day to guarantee your surplus.
+            </p>
+
+            <div class="smoothie-recipe">
+                <ul>
+                    <li><strong>12-16 oz</strong> Whole Milk (or Oat Milk)</li>
+                    <li><strong>1 large</strong> ripe banana</li>
+                    <li><strong>1/4 cup</strong> heavy cream or coconut cream <em>(Massive calorie boost)</em></li>
+                    <li><strong>3 heaping tbsp</strong> peanut or almond butter</li>
+                    <li><strong>1 scoop</strong> whey protein (chocolate or vanilla)</li>
+                    <li><strong>1 tbsp</strong> olive oil <em>(You won't taste it)</em></li>
+                    <li><strong>1 big squeeze</strong> of honey</li>
+                </ul>
+            </div>
         </section>
     </div>
 
@@ -558,8 +583,15 @@
             const btn = document.querySelector(`button[onclick*="'${currentDay}'"]`);
             if (btn) {
                 openTab(currentDay, btn);
-                // Ensure the active tab is visible in the scrollable row
-                btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                // Ensure the active tab is visible in the scrollable row without scrolling the whole page
+                const tabsContainer = document.querySelector('.tabs');
+                if (tabsContainer) {
+                    const scrollLeft = btn.offsetLeft - (tabsContainer.offsetWidth / 2) + (btn.offsetWidth / 2);
+                    tabsContainer.scrollTo({
+                        left: scrollLeft,
+                        behavior: 'smooth'
+                    });
+                }
             }
         });
     </script>

@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Elite Thrower Protocol</title>
+
+    <!-- Google Fonts for Modern Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* CSS Custom Properties (Variables) */
+        :root {
+            --bg: #09090b;
+            /* Very dark slate for modern dark mode */
+            --surface: rgba(39, 39, 42, 0.6);
+            /* Glassmorphism surface */
+            --border: rgba(255, 255, 255, 0.08);
+            --accent1: #c084fc;
+            /* Vibrant Purple */
+            --accent2: #38bdf8;
+            /* Vibrant Blue */
+            --text-main: #f8fafc;
+            --text-muted: #a1a1aa;
+        }
+
+        /* Reset & Base Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+
+            /* Modern ambient glow background */
+            background-image:
+                radial-gradient(circle at 10% 20%, rgba(192, 132, 252, 0.12), transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(56, 189, 248, 0.12), transparent 40%);
+            background-attachment: fixed;
+
+            padding: 1rem;
+            padding-bottom: 4rem;
+        }
+
+        /* Typography & Header */
+        header {
+            text-align: center;
+            padding: 2rem 0.5rem;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            line-height: 1.15;
+            margin-bottom: 0.5rem;
+            /* Premium gradient text */
+            background: linear-gradient(135deg, var(--accent1), var(--accent2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        p.subtitle {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            font-weight: 300;
+        }
+
+        /* Layout Container */
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Cards & Glassmorphism */
+        section {
+            animation: fadeInUp 0.8s ease-out both;
+        }
+
+        /* Stagger card animations */
+        section:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        section:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        section:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .card {
+            background: var(--surface);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 1.5rem;
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        /* Section Typography */
+        h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.8rem;
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            color: var(--accent2);
+            margin-top: 1.2rem;
+            margin-bottom: 0.3rem;
+            font-weight: 600;
+        }
+
+        /* Lists */
+        ul {
+            list-style: none;
+        }
+
+        li {
+            margin-bottom: 0.6rem;
+            position: relative;
+            padding-left: 1.2rem;
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 0.95rem;
+        }
+
+        li::before {
+            content: '▹';
+            color: var(--accent1);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        li strong {
+            color: #fff;
+        }
+
+        /* Highlight Boxes (Notes) */
+        .highlight-box {
+            background: rgba(56, 189, 248, 0.08);
+            border-left: 3px solid var(--accent2);
+            padding: 1rem;
+            border-radius: 0 12px 12px 0;
+            margin-bottom: 1.2rem;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .highlight-box strong {
+            color: var(--accent2);
+        }
+
+        /* Modern Tabs for Mobile Training Schedule */
+        .tabs {
+            display: flex;
+            overflow-x: auto;
+            gap: 0.5rem;
+            padding-bottom: 1rem;
+            margin-bottom: 0.5rem;
+            scrollbar-width: none;
+            /* Firefox */
+        }
+
+        .tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Safari/Chrome */
+
+        .tab-btn {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 0.6rem 1.2rem;
+            border-radius: 30px;
+            font-family: inherit;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, var(--accent1), var(--accent2));
+            color: #fff;
+            border-color: transparent;
+            box-shadow: 0 4px 15px rgba(56, 189, 248, 0.3);
+            transform: scale(1.05);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Exercise Groups within Schedule */
+        .exercise-group {
+            margin-bottom: 1rem;
+            background: rgba(0, 0, 0, 0.25);
+            padding: 1.2rem;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .exercise-group h4 {
+            color: var(--accent1);
+            margin-bottom: 0.8rem;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .smoothie-recipe {
+            background: linear-gradient(180deg, rgba(192, 132, 252, 0.05) 0%, transparent 100%);
+            border-radius: 12px;
+            padding: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Elite Protocol</h1>
+        <p class="subtitle">Strength & Structural Mass Program</p>
+    </header>
+
+    <div class="container">
+
+        <!-- Nutrition Strategy -->
+        <section class="card">
+            <h2>🍽️ Nutrition Strategy</h2>
+
+            <div class="highlight-box">
+                <strong>Coach's Rule:</strong> Never eat until you are painfully full. Eat smaller, heavily
+                calorie-dense items frequently, and drink your calories to bypass stomach volume. Aim for a ~300-400
+                calorie daily surplus for 0.25-0.75 lb/week mass gain.
+            </div>
+
+            <div class="highlight-box"
+                style="border-left-color: var(--accent1); background: rgba(192, 132, 252, 0.08);">
+                <strong style="color: var(--accent1);">Female Athlete Focus:</strong> Ensure adequate Iron (beef,
+                spinach) and Calcium/Vitamin D (milk, yogurt) for bone health. Do not skimp on carbs—they fuel explosive
+                throws.
+            </div>
+
+            <h3>Breakfast</h3>
+            <ul>
+                <li><strong>Option 1:</strong> 1 large heavy bagel (e.g., Dave's Killer Bread) + thick peanut butter + 1
+                    glass whole milk.</li>
+                <li><strong>Option 2:</strong> 2 scrambled eggs (cooked in butter) + avocado + whole milk.</li>
+            </ul>
+
+            <h3>Mid-Morning "Grazing"</h3>
+            <ul>
+                <li>Handful of dense trail mix (walnuts, almonds, dried cranberries, dark chocolate chips).</li>
+                <li><em>Keep a bag in your backpack and graze between classes.</em></li>
+            </ul>
+
+            <h3>Lunch</h3>
+            <ul>
+                <li><strong>Eat:</strong> 1 large PB&J (heavy on the PB) on dense bread + 1 whole chocolate milk.</li>
+                <li><strong>Alternative:</strong> 1 cup pasta tossed in olive oil & pesto + dark meat chicken (thighs).
+                </li>
+            </ul>
+
+            <h3>Pre & Post Workout</h3>
+            <ul>
+                <li><strong>Pre (1 hr prior):</strong> 1 handful of dates/dried mango + spoonful of peanut butter.</li>
+                <li><strong>Post (Within 1 hr):</strong> 16 oz whole chocolate milk (easy digesting liquid calories).
+                </li>
+            </ul>
+
+            <h3>Dinner & Pre-Bed</h3>
+            <ul>
+                <li><strong>Dinner:</strong> 4-5 oz fatty protein (steak, salmon, thighs) + roasted potatoes tossed in
+                    olive oil.</li>
+                <li><strong>Pre-Bed:</strong> 1 cup Full-Fat Greek Yogurt + 1 tbsp heavy cream + honey & walnuts. (Or
+                    half a smoothie).</li>
+            </ul>
+        </section>
+
+        <!-- Smoothie Section -->
+        <section class="card">
+            <h2>🥤 The "Thick Tank" Smoothie</h2>
+            <p style="font-size: 0.95rem; color: var(--text-muted); margin-bottom: 1rem;">
+                Liquids bypass stretch receptors. Drink this once a day to guarantee your surplus.
+            </p>
+
+            <div class="smoothie-recipe">
+                <ul>
+                    <li><strong>12-16 oz</strong> Whole Milk (or Oat Milk)</li>
+                    <li><strong>1 large</strong> ripe banana</li>
+                    <li><strong>1/4 cup</strong> heavy cream or coconut cream <em>(Massive calorie boost)</em></li>
+                    <li><strong>3 heaping tbsp</strong> peanut or almond butter</li>
+                    <li><strong>1 scoop</strong> whey protein (chocolate or vanilla)</li>
+                    <li><strong>1 tbsp</strong> olive oil <em>(You won't taste it)</em></li>
+                    <li><strong>1 big squeeze</strong> of honey</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Training Schedule -->
+        <section class="card">
+            <h2>🏋️ Training Split</h2>
+
+            <!-- Mobile Tabs -->
+            <div class="tabs">
+                <button class="tab-btn active" onclick="openTab('mon', this)">Mon</button>
+                <button class="tab-btn" onclick="openTab('tue', this)">Tue</button>
+                <button class="tab-btn" onclick="openTab('wed', this)">Wed</button>
+                <button class="tab-btn" onclick="openTab('thu', this)">Thu</button>
+                <button class="tab-btn" onclick="openTab('fri', this)">Fri</button>
+                <button class="tab-btn" onclick="openTab('sat', this)">Sat</button>
+                <button class="tab-btn" onclick="openTab('sun', this)">Sun</button>
+            </div>
+
+            <!-- Tab Content: Monday -->
+            <div id="mon" class="tab-content active">
+                <div class="exercise-group">
+                    <h4>🎯 Throws</h4>
+                    <ul>
+                        <li>6-10 standing</li>
+                        <li>6-10 step-in</li>
+                        <li>4-6 full</li>
+                    </ul>
+                </div>
+                <div class="exercise-group">
+                    <h4>💪 Lower Body Strength</h4>
+                    <ul>
+                        <li><strong>Back squat:</strong> 4 x 5</li>
+                        <li><strong>RDL:</strong> 3 x 6</li>
+                        <li><strong>Bulgarian split squat:</strong> 3 x 8/leg</li>
+                        <li><strong>Hip thrust:</strong> 3 x 8</li>
+                        <li><strong>Standing calf raise:</strong> 3 x 12</li>
+                        <li><strong>Pallof press:</strong> 3 x 10/side</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Tab Content: Tuesday -->
+            <div id="tue" class="tab-content">
+                <div class="exercise-group">
+                    <h4>🌪️ Med Ball Power</h4>
+                    <ul>
+                        <li><strong>Rotational scoop toss:</strong> 4 x 4/side</li>
+                        <li><strong>Overhead backward throw:</strong> 4 x 4</li>
+                        <li><strong>Chest pass:</strong> 3 x 5</li>
+                    </ul>
+                </div>
+                <div class="exercise-group">
+                    <h4>💪 Upper Body</h4>
+                    <ul>
+                        <li><strong>Bench press:</strong> 4 x 5</li>
+                        <li><strong>Pull-ups:</strong> 3 x 6-10</li>
+                        <li><strong>DB incline press:</strong> 3 x 8</li>
+                        <li><strong>One-arm DB row:</strong> 3 x 8/side</li>
+                        <li><strong>Landmine press:</strong> 3 x 8/side</li>
+                        <li><strong>Face pulls:</strong> 3 x 12-15</li>
+                        <li><strong>Farmer carry:</strong> 3 x 30-40 yds</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Tab Content: Wednesday -->
+            <div id="wed" class="tab-content">
+                <div class="exercise-group">
+                    <h4>🧘‍♀️ Active Recovery</h4>
+                    <p style="color: rgba(255,255,255,0.85); font-size: 0.95rem;">
+                        Easy walking, light bike, thoracic/shoulder mobility. Do not burn excess calories today. Focus
+                        on feeling loose and recovered.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Tab Content: Thursday -->
+            <div id="thu" class="tab-content">
+                <div class="exercise-group">
+                    <h4>🎯 Throws</h4>
+                    <ul>
+                        <li>6-8 standing</li>
+                        <li>6-8 rotational</li>
+                        <li>6-10 full</li>
+                    </ul>
+                </div>
+                <div class="exercise-group">
+                    <h4>⚡ Power</h4>
+                    <ul>
+                        <li><strong>Olympic Lift:</strong> Power/Hang clean 4 x 3</li>
+                        <li><strong>Jump squat:</strong> 3 x 4</li>
+                        <li><strong>Box jump:</strong> 3 x 3</li>
+                        <li><strong>RFESS (Rear-foot split squat):</strong> 3 x 6/leg</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Tab Content: Friday -->
+            <div id="fri" class="tab-content">
+                <div class="exercise-group">
+                    <h4>💪 Upper Armor</h4>
+                    <ul>
+                        <li><strong>Bench press:</strong> 4 x 5</li>
+                        <li><strong>Barbell row:</strong> 4 x 6</li>
+                        <li><strong>DB shoulder press:</strong> 3 x 8</li>
+                        <li><strong>Lat pulldown:</strong> 3 x 8-10</li>
+                        <li><strong>Incline DB press:</strong> 3 x 8</li>
+                        <li><strong>Cable row:</strong> 3 x 10</li>
+                        <li><strong>Face pull:</strong> 2-3 x 15</li>
+                        <li><strong>Farmer carry:</strong> 3 x 30 yds</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Tab Content: Saturday -->
+            <div id="sat" class="tab-content">
+                <div class="exercise-group">
+                    <h4>🎯 Technique & Speed</h4>
+                    <ul>
+                        <li><strong>Throws (Low Vol):</strong> 4-6 standing, 4-6 step-in, 6-8 full.</li>
+                        <li><em>Focus strictly on fast entry and separation.</em></li>
+                        <li><strong>Sprints:</strong> 4-6 x 20-30 yds (Keep brief)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Tab Content: Sunday -->
+            <div id="sun" class="tab-content">
+                <div class="exercise-group">
+                    <h4>💤 Complete Rest</h4>
+                    <p style="color: rgba(255,255,255,0.85); font-size: 0.95rem;">
+                        Maximize sleep, sip on your smoothie, and prepare for the week. Let your body grow.
+                    </p>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- Progression & Cycles -->
+        <section class="card">
+            <h2>📈 Progression & Cycles</h2>
+            <div class="highlight-box">
+                <strong>Golden Rule:</strong> If technique breaks down, don't increase the weight. Increase loads
+                slightly (+2.5-5lb upper, +5-10lb lower) only when you complete every set with excellent form and ~2
+                reps left in the tank.
+            </div>
+
+            <h3>4-Week Training Cycle</h3>
+            <ul>
+                <li><strong>Week 1:</strong> Establish technique. Moderate weights. (RPE 6-7)</li>
+                <li><strong>Week 2:</strong> Add a small amount of weight. (RPE 7)</li>
+                <li><strong>Week 3:</strong> Small additional increase. (RPE 7-8)</li>
+                <li><strong>Week 4 (Deload):</strong> Reduce lifting volume by 30-40%. Keep explosive work, reduce
+                    fatigue. Restart cycle.</li>
+            </ul>
+        </section>
+    </div>
+
+    <!-- JavaScript for Mobile Tabs -->
+    <script>
+        function openTab(day, btn) {
+            // Hide all tab content
+            document.querySelectorAll('.tab-content').forEach(el => {
+                el.classList.remove('active');
+            });
+
+            // Remove active class from all buttons
+            document.querySelectorAll('.tab-btn').forEach(el => {
+                el.classList.remove('active');
+            });
+
+            // Show selected tab content
+            document.getElementById(day).classList.add('active');
+
+            // Highlight selected button
+            btn.classList.add('active');
+
+            // Optional: slight haptic feedback if supported by mobile browser
+            if (window.navigator && window.navigator.vibrate) {
+                window.navigator.vibrate(20);
+            }
+        }
+
+        // Set the current day on load
+        window.addEventListener('DOMContentLoaded', () => {
+            const days = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
+            const currentDay = days[new Date().getDay()];
+            const btn = document.querySelector(`button[onclick*="'${currentDay}'"]`);
+            if (btn) {
+                openTab(currentDay, btn);
+                // Ensure the active tab is visible in the scrollable row
+                btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            }
+        });
+    </script>
+</body>
+
+</html>
